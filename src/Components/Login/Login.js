@@ -6,11 +6,11 @@ const Login = () => {
         <div>
             <h1>Авторизация</h1>
             <div className={styles.head}>
-                <label>
+                <label className={styles.label}>
                     <span>Email</span>
                     <input/>
                 </label>
-                <label>
+                <label className={styles.label}>
                     <span>Password</span>
                     <input/>
                 </label>
