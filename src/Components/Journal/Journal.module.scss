@@ -1,0 +1,14 @@
+.root {
+  margin: 1rem 0;
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+  overflow: auto;
+  align-items: center;
+}
+
+.head {
+  display: grid;
+  align-items: center;
+  justify-content: start;
+}

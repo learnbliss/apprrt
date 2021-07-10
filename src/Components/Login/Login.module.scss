@@ -26,6 +26,11 @@
   justify-self: start;
 }
 
+.error {
+  color: red;
+  font-weight: normal;
+}
+
 @media all and (min-width: 768px) {
   .head {
 

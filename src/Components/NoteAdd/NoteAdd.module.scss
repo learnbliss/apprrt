@@ -1,0 +1,48 @@
+.root {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  color: white;
+}
+
+.head {
+  display: grid;
+  grid-gap: .5rem;
+}
+
+.error {
+  color: red;
+}
+
+.label {
+  display: grid;
+  grid-gap: .1rem;
+}
+
+.label textarea {
+  
+}
+
+.buttons {
+  margin: 1rem 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 1rem;
+}
+
+.loader {
+  position: fixed;
+  display: grid;
+  grid-gap: 1rem;
+  justify-content: center;
+  align-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(1,1,1, .8);
+}
