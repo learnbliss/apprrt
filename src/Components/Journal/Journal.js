@@ -1,17 +1,25 @@
 import React, {useEffect} from 'react';
 import styles from './Journal.module.scss'
 import {connect} from 'react-redux';
-import {loadDaybook, newNoteEditMode} from '../../redux/actions';
-import {daybookDateTimeSelector, daybookLoadingSelector, daybookLoadedSelector} from '../../redux/selectors'
+import {delNoteConfirm, loadDaybook, newNoteEditMode} from '../../redux/actions';
+import {
+    daybookDateTimeSelector,
+    daybookLoadingSelector,
+    daybookLoadedSelector,
+    errorLoadedSelector
+} from '../../redux/selectors'
 import Loader from '../Loader/Loader';
+import Close from '../Close/Close';
 
-const Journal = ({loadDaybook, loading, loaded, daybook, newNoteEditMode}) => {
+const Journal = ({loadDaybook, loading, loaded, daybook, newNoteEditMode, errorLoad, delNoteConfirm}) => {
 
     useEffect(() => {
         if (!loading && !loaded) loadDaybook();
     }, []); //eslint-disable-line
 
     if (loading) return <Loader/>;
+
+    if (errorLoad) return <h2 className={styles.errorLoad}>ошибка загрузки данных</h2>
 
     return (
         <>
@@ -22,8 +30,11 @@ const Journal = ({loadDaybook, loading, loaded, daybook, newNoteEditMode}) => {
             <div className={styles.root}>
                 {daybook.map((note, i) => {
                     return (
-                        <div key={i}>
-                            <div><b>Запись номер:</b> {i + 1}</div>
+                        <div key={note.id}>
+                            <div className={styles.noteHead}>
+                                <div><b>Запись номер:</b> {i + 1}</div>
+                                <div><Close onClick={delNoteConfirm}/></div>
+                            </div>
                             <div><b>Дата:</b> {note.date}</div>
                             <div><b>Время:</b> {note.time}</div>
                             <div><b>Вспомогательное средство:</b> {note.aid}</div>
@@ -40,4 +51,5 @@ export default connect((state) => ({
     daybook: daybookDateTimeSelector(state),
     loading: daybookLoadingSelector(state),
     loaded: daybookLoadedSelector(state),
-}), {loadDaybook, newNoteEditMode})(Journal);
+    errorLoad: errorLoadedSelector(state),
+}), {loadDaybook, newNoteEditMode, delNoteConfirm})(Journal);

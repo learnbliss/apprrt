@@ -3,6 +3,7 @@ import {createSelector} from 'reselect';
 export const daybookSelector = (state) => state.daybook.entities;
 export const daybookLoadingSelector = (state) => state.daybook.loading;
 export const daybookLoadedSelector = (state) => state.daybook.loaded;
+export const errorLoadedSelector = (state) => state.daybook.error;
 
 export const daybookDateTimeSelector = createSelector(
     daybookSelector,
@@ -17,8 +18,16 @@ export const daybookDateTimeSelector = createSelector(
     }
 )
 
-export const backgroundSelector = state => state.newNote.dark
+export const newNoteBackgroundSelector = state => state.newNote.dark
 export const editModeNewNoteSelector = state => state.newNote.editMode
 export const loadingNewNoteSelector = state => state.newNote.loading
 export const loadedNewNoteSelector = state => state.newNote.loaded
 export const errorNewNoteSelector = state => state.newNote.error
+
+export const delNoteBackgroundSelector = state => state.delNote.dark
+export const editModeDelNoteSelector = state => state.delNote.confirmMode
+export const loadingDelNoteSelector = state => state.delNote.loading
+export const loadedDelNoteSelector = state => state.delNote.loaded
+export const errorDelNoteSelector = state => state.delNote.error
+
+

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Loader.module.scss'
 
-const Loader = (props) => {
+const Loader = () => {
     return (
         <div className={styles.root}>
             <div className={styles.ldsSpinner}>

@@ -1,11 +1,10 @@
 import {
     CANCEL,
-    CONFIRM,
+    CONFIRM, DEL_NOTE,
     FAILURE,
     LOAD_DAYBOOK,
     NEW_NOTE,
     REQUEST,
-    SAVE,
     SUCCESS,
     UPLOAD
 } from './constants';
@@ -38,7 +37,6 @@ export const newNoteCancel = () => {
 export const addNoteSave = (newNote) => {
     return async (dispatch, getState) => {
         dispatch({type: NEW_NOTE + UPLOAD})
-        console.log('newNote: ', newNote);
         try {
             await fetch(
                 `https://react-purificatio-default-rtdb.firebaseio.com/daybook.json`,
@@ -48,7 +46,7 @@ export const addNoteSave = (newNote) => {
                     headers: {'Content-Type': 'application/json'}
                 });
             dispatch({type: NEW_NOTE + SUCCESS})
-            dispatch({type: NEW_NOTE + SAVE, payload: {newNote}})
+            dispatch(loadDaybook())
         } catch (err) {
             dispatch({type: NEW_NOTE + FAILURE, payload: {err}})
             console.error(err);
@@ -61,3 +59,27 @@ export const addNoteConfirm = () => {
         type: NEW_NOTE + CONFIRM
     }
 }
+
+export const delNoteConfirm = () => {
+    return {
+        type: DEL_NOTE +  CONFIRM
+    }
+}
+
+// export const deleteNote = (noteId) => {
+//     return async (dispatch, getState) => {
+//         dispatch({type: DEL_NOTE + UPLOAD})
+//         try {
+//             await fetch(
+//                 `https://react-purificatio-default-rtdb.firebaseio.com/daybook.json/${noteId}`,
+//                 {
+//                     method: 'DELETE',
+//                 });
+//             dispatch({type: DEL_NOTE + SUCCESS})
+//             dispatch(loadDaybook())
+//         } catch (err) {
+//             dispatch({type: DEL_NOTE + FAILURE, payload: {err}})
+//             console.error(err);
+//         }
+//     };
+// };

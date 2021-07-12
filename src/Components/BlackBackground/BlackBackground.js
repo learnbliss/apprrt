@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './BlackBackground.module.scss'
 import {connect} from 'react-redux';
-import {backgroundSelector} from '../../redux/selectors';
+import {newNoteBackgroundSelector} from '../../redux/selectors';
 
 const BlackBackground = ({dark}) => {
     return (
@@ -12,5 +12,5 @@ const BlackBackground = ({dark}) => {
 };
 
 export default connect(state => ({
-    dark: backgroundSelector(state),
+    dark: newNoteBackgroundSelector(state),
 }))(BlackBackground);

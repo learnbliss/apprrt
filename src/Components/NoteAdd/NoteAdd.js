@@ -1,16 +1,31 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './NoteAdd.module.scss'
 import {useForm} from 'react-hook-form';
 import {connect} from 'react-redux';
 import {addNoteConfirm, addNoteSave, newNoteCancel} from '../../redux/actions';
 import Loader from '../Loader/Loader';
-import {errorNewNoteSelector, loadedNewNoteSelector, loadingNewNoteSelector} from '../../redux/selectors';
+import {
+    errorNewNoteSelector,
+    loadedNewNoteSelector,
+    loadingNewNoteSelector
+} from '../../redux/selectors';
 
 const NoteAdd = ({addNoteSave, newNoteCancel, loadingNewNote, loadedNewNote, addNoteConfirm, errorNewNote}) => {
     const {register, handleSubmit, formState: {errors}} = useForm();
     const onSubmit = handleSubmit(data => {
         addNoteSave(data)
     });
+    const escape = (e) => {
+        if (e.key === 'Escape') {
+            newNoteCancel()
+        }
+    };
+    useEffect(() => {
+        document.addEventListener('keydown', escape, false);
+        return () => {
+            document.removeEventListener('keydown', escape, false);
+        };
+    }, []); //eslint-disable-line
     return (
         <div className={styles.root}>
             <h1>Добавить запись</h1>
@@ -27,7 +42,7 @@ const NoteAdd = ({addNoteSave, newNoteCancel, loadingNewNote, loadedNewNote, add
                 </label>
                 <label className={styles.label}>
                     <span>{'Вспомогательное средство?'}</span>
-                    <input type={'text'} {...register('aid', {required: true})} />
+                    <input type={'text'} {...register('aid')} />
                 </label>
                 <label className={styles.label}>
                     <span>{'Комментарий'}</span>

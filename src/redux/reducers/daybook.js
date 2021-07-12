@@ -1,4 +1,5 @@
-import {FAILURE, LOAD_DAYBOOK, NEW_NOTE, REQUEST, SAVE, SUCCESS} from '../constants';
+import {FAILURE, LOAD_DAYBOOK, LOAD_LAST_DAYBOOK, REQUEST, SUCCESS} from '../constants';
+import {normalizeView} from '../../utils/utils';
 
 const initialState = {
     entities: [],
@@ -9,7 +10,6 @@ const initialState = {
 
 export default function daybook (state = initialState, action) {
     const {type, payload} = action;
-    console.log('payload.daybook: ', payload);
     switch (type) {
         case LOAD_DAYBOOK + REQUEST:
             return {
@@ -20,7 +20,7 @@ export default function daybook (state = initialState, action) {
         case LOAD_DAYBOOK + SUCCESS:
             return {
                 ...state,
-                entities: [...state.entities, ...Object.values(payload.daybook)],
+                entities: normalizeView(payload.daybook),
                 loading: false,
                 loaded: true,
             };
@@ -31,11 +31,11 @@ export default function daybook (state = initialState, action) {
                 loaded: false,
                 error: payload.error,
             };
-        case NEW_NOTE + SAVE:  // вынесено в этот редьюсер чтобы сохранить в локальный стейт, не делая лишнего api запроса
-            return {
-                ...state,
-                entities: [...state.entities, payload.newNote]
-            }
+        // case LOAD_LAST_DAYBOOK:
+        //     return {
+        //         ...state,
+        //
+        //     }
         default:
             return state
     }
