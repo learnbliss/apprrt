@@ -9,7 +9,7 @@ import {
     loadedNewNoteSelector,
     loadingNewNoteSelector
 } from '../../redux/selectors';
-import {KeyDownEscape} from '../../Hoc/keyDownEscape';
+import KeyDownEscape from '../KeyDownEscape/KeyDownEscape';
 
 const NoteAdd = ({addNoteSave, newNoteCancel, loadingNewNote, loadedNewNote, addNoteConfirm, errorNewNote}) => {
     const {register, handleSubmit, formState: {errors}} = useForm();
@@ -50,12 +50,13 @@ const NoteAdd = ({addNoteSave, newNoteCancel, loadingNewNote, loadedNewNote, add
                 <div className={styles.loader}>Запись добавлена <button onClick={addNoteConfirm}>Ok</button>
                 </div> : null}
             {errorNewNote ? <div>{errorNewNote}</div> : null}
+            <KeyDownEscape doIt={newNoteCancel}/>
         </div>
     );
 };
 
-export default KeyDownEscape(connect(state => ({
+export default connect(state => ({
     loadingNewNote: loadingNewNoteSelector(state),
     loadedNewNote: loadedNewNoteSelector(state),
     errorNewNote: errorNewNoteSelector(state),
-}), {addNoteSave, newNoteCancel, addNoteConfirm})(NoteAdd));
+}), {addNoteSave, newNoteCancel, addNoteConfirm})(NoteAdd);
