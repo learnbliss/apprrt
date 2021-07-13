@@ -1,7 +1,8 @@
-import {CANCEL, CONFIRM, FAILURE, DEL_NOTE, REQUEST, SUCCESS, UPLOAD} from '../constants';
+import {CANCEL, CONFIRM, FAILURE, DEL_NOTE, REQUEST, SUCCESS, DELETE} from '../constants';
 
 const initialState = {
     confirmMode: false,
+    noteId: null,
     loading: false,
     loaded: false,
     error: null,
@@ -14,35 +15,34 @@ export default function delNote(state = initialState, action) {
             return {
                 ...state,
                 confirmMode: true,
+                noteId: payload,
             }
-        // case DEL_NOTE + CANCEL:
-        //     return {
-        //         ...state,
-        //         dark: false,
-        //         confirmMode: false,
-        //     }
-        // case DEL_NOTE + UPLOAD:
-        //     return {
-        //         ...state,
-        //         loading: true,
-        //     }
-        // case DEL_NOTE + SUCCESS:
-        //     return {
-        //         ...state,
-        //         loading: false,
-        //         loaded: true,
-        //         dark: false,
-        //         confirmMode: false,
-        //     }
-        // case DEL_NOTE + FAILURE:
-        //     return {
-        //         ...state,
-        //         loading: false,
-        //         loaded: false,
-        //         dark: false,
-        //         confirmMode: false,
-        //         error: payload.error
-        //     }
+        case DEL_NOTE + CANCEL:
+            return {
+                ...state,
+                confirmMode: false,
+            }
+        case DEL_NOTE + DELETE + REQUEST:
+            return {
+                ...state,
+                loading: true,
+            }
+        case DEL_NOTE + DELETE + SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                loaded: true,
+                confirmMode: false,
+                noteId: null,
+            }
+        case DEL_NOTE + DELETE + FAILURE:
+            return {
+                ...state,
+                loading: false,
+                loaded: false,
+                confirmMode: false,
+                error: payload.error
+            }
         default:
             return state
     }

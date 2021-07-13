@@ -1,6 +1,6 @@
 import {
     CANCEL,
-    CONFIRM, DEL_NOTE,
+    CONFIRM, DEL_NOTE, DELETE,
     FAILURE,
     LOAD_DAYBOOK,
     NEW_NOTE,
@@ -8,6 +8,7 @@ import {
     SUCCESS,
     UPLOAD
 } from './constants';
+import {noteIdDelNoteModeSelector} from './selectors';
 
 export const loadDaybook = () => async (dispatch) => {
     dispatch({type: LOAD_DAYBOOK + REQUEST});
@@ -22,20 +23,11 @@ export const loadDaybook = () => async (dispatch) => {
     }
 };
 
-export const newNoteEditMode = () => {
-    return {
-        type: NEW_NOTE + REQUEST,
-    }
-};
-
-export const newNoteCancel = () => {
-    return {
-        type: NEW_NOTE + CANCEL,
-    }
-};
+export const newNoteEditMode = () => ({type: NEW_NOTE + REQUEST,});
+export const newNoteCancel = () => ({type: NEW_NOTE + CANCEL,});
 
 export const addNoteSave = (newNote) => {
-    return async (dispatch, getState) => {
+    return async (dispatch) => {
         dispatch({type: NEW_NOTE + UPLOAD})
         try {
             await fetch(
@@ -54,32 +46,27 @@ export const addNoteSave = (newNote) => {
     };
 };
 
-export const addNoteConfirm = () => {
-    return {
-        type: NEW_NOTE + CONFIRM
-    }
-}
+export const addNoteConfirm = () => ({type: NEW_NOTE + CONFIRM})
 
-export const delNoteConfirm = () => {
-    return {
-        type: DEL_NOTE +  CONFIRM
-    }
-}
+export const delNoteConfirm = (noteId) => ({type: DEL_NOTE + CONFIRM, payload: noteId})
+export const cancelNoteConfirm = () => ({type: DEL_NOTE + CANCEL})
 
-// export const deleteNote = (noteId) => {
-//     return async (dispatch, getState) => {
-//         dispatch({type: DEL_NOTE + UPLOAD})
-//         try {
-//             await fetch(
-//                 `https://react-purificatio-default-rtdb.firebaseio.com/daybook.json/${noteId}`,
-//                 {
-//                     method: 'DELETE',
-//                 });
-//             dispatch({type: DEL_NOTE + SUCCESS})
-//             dispatch(loadDaybook())
-//         } catch (err) {
-//             dispatch({type: DEL_NOTE + FAILURE, payload: {err}})
-//             console.error(err);
-//         }
-//     };
-// };
+export const deleteNote = () => {
+    return async (dispatch, getState) => {
+        const state = getState();
+        const noteId = noteIdDelNoteModeSelector(state)
+        dispatch({type: DEL_NOTE + DELETE + REQUEST})
+        try {
+            await fetch(
+                `https://react-purificatio-default-rtdb.firebaseio.com/daybook/${noteId}.json`,
+                {
+                    method: 'DELETE',
+                });
+            dispatch({type: DEL_NOTE + DELETE + SUCCESS})
+            dispatch(loadDaybook())
+        } catch (err) {
+            dispatch({type: DEL_NOTE + DELETE + FAILURE, payload: {err}})
+            console.error(err);
+        }
+    };
+};

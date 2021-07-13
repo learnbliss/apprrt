@@ -26,6 +26,7 @@ export const errorNewNoteSelector = state => state.newNote.error
 
 export const delNoteBackgroundSelector = state => state.delNote.dark
 export const confirmDelNoteModeSelector = state => state.delNote.confirmMode
+export const noteIdDelNoteModeSelector = state => state.delNote.noteId
 export const loadingDelNoteSelector = state => state.delNote.loading
 export const loadedDelNoteSelector = state => state.delNote.loaded
 export const errorDelNoteSelector = state => state.delNote.error

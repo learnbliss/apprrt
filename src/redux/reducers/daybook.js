@@ -1,4 +1,4 @@
-import {FAILURE, LOAD_DAYBOOK, LOAD_LAST_DAYBOOK, REQUEST, SUCCESS} from '../constants';
+import {FAILURE, LOAD_DAYBOOK, REQUEST, SUCCESS} from '../constants';
 import {normalizeView} from '../../utils/utils';
 
 const initialState = {
@@ -29,7 +29,8 @@ export default function daybook (state = initialState, action) {
                 ...state,
                 loading: false,
                 loaded: false,
-                error: payload.error,
+                error: payload.error.message,
+                entities: []
             };
         // case LOAD_LAST_DAYBOOK:
         //     return {

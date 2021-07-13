@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styles from './NoteAdd.module.scss'
 import {useForm} from 'react-hook-form';
 import {connect} from 'react-redux';
