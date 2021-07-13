@@ -3,8 +3,12 @@
   display: grid;
   grid-gap: 2rem;
   grid-template-columns: 1fr 1fr;
-  overflow: auto;
-  align-items: center;
+  align-content: center;
+}
+
+.note {
+  padding: .3rem;
+  box-shadow: 0 0 5px 1px rgba(0,0,0,0.75);
 }
 
 .head {

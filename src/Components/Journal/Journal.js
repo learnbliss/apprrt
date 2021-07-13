@@ -32,7 +32,7 @@ const Journal = ({loadDaybook, loading, loaded, daybook, newNoteEditMode, errorL
             <div className={styles.root}>
                 {daybook.map((note, i) => {
                     return (
-                        <div key={note.id}>
+                        <div key={note.id} className={styles.note}>
                             <div className={styles.noteHead}>
                                 <div><b>Запись номер:</b> {i + 1}</div>
                                 <div onClick={() => delNoteConfirm(note.id)}><Close/></div>
