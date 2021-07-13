@@ -1,7 +1,6 @@
 import {CANCEL, CONFIRM, FAILURE, DEL_NOTE, REQUEST, SUCCESS, UPLOAD} from '../constants';
 
 const initialState = {
-    dark: false,
     confirmMode: false,
     loading: false,
     loaded: false,
@@ -14,7 +13,6 @@ export default function delNote(state = initialState, action) {
         case DEL_NOTE + CONFIRM:
             return {
                 ...state,
-                dark: true,
                 confirmMode: true,
             }
         // case DEL_NOTE + CANCEL:

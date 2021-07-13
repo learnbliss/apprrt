@@ -6,12 +6,15 @@ import {
     daybookDateTimeSelector,
     daybookLoadingSelector,
     daybookLoadedSelector,
-    errorLoadedSelector
+    errorLoadedSelector, editModeNewNoteSelector, confirmDelNoteModeSelector
 } from '../../redux/selectors'
 import Loader from '../Loader/Loader';
 import Close from '../Close/Close';
+import NoteAdd from '../NoteAdd/NoteAdd';
+import BlackBackground from '../BlackBackground/BlackBackground';
+import Confirm from '../Confirm/Confirm';
 
-const Journal = ({loadDaybook, loading, loaded, daybook, newNoteEditMode, errorLoad, delNoteConfirm}) => {
+const Journal = ({loadDaybook, loading, loaded, daybook, newNoteEditMode, errorLoad, delNoteConfirm, editMode, confirmMode}) => {
 
     useEffect(() => {
         if (!loading && !loaded) loadDaybook();
@@ -19,7 +22,7 @@ const Journal = ({loadDaybook, loading, loaded, daybook, newNoteEditMode, errorL
 
     if (loading) return <Loader/>;
 
-    if (errorLoad) return <h2 className={styles.errorLoad}>ошибка загрузки данных</h2>
+    if (errorLoad) return <h2 className={styles.error}>ошибка загрузки данных</h2>
 
     return (
         <>
@@ -33,7 +36,7 @@ const Journal = ({loadDaybook, loading, loaded, daybook, newNoteEditMode, errorL
                         <div key={note.id}>
                             <div className={styles.noteHead}>
                                 <div><b>Запись номер:</b> {i + 1}</div>
-                                <div><Close onClick={delNoteConfirm}/></div>
+                                <div onClick={delNoteConfirm}><Close/></div>
                             </div>
                             <div><b>Дата:</b> {note.date}</div>
                             <div><b>Время:</b> {note.time}</div>
@@ -43,6 +46,9 @@ const Journal = ({loadDaybook, loading, loaded, daybook, newNoteEditMode, errorL
                     )
                 })}
             </div>
+            {editMode ? <NoteAdd/> : null}
+            {confirmMode ? <Confirm/> : null}
+            <BlackBackground dark={editMode || confirmMode}/>
         </>
     );
 };
@@ -52,4 +58,6 @@ export default connect((state) => ({
     loading: daybookLoadingSelector(state),
     loaded: daybookLoadedSelector(state),
     errorLoad: errorLoadedSelector(state),
+    editMode: editModeNewNoteSelector(state),
+    confirmMode: confirmDelNoteModeSelector(state),
 }), {loadDaybook, newNoteEditMode, delNoteConfirm})(Journal);

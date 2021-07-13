@@ -1,7 +1,6 @@
 import {CANCEL, CONFIRM, FAILURE, NEW_NOTE, REQUEST, SUCCESS, UPLOAD} from '../constants';
 
 const initialState = {
-    dark: false,
     editMode: false,
     loading: false,
     loaded: false,
@@ -14,13 +13,11 @@ export default function newNote (state = initialState, action) {
         case NEW_NOTE + REQUEST:
             return {
                 ...state,
-                dark: true,
                 editMode: true,
             }
         case NEW_NOTE + CANCEL:
             return {
                 ...state,
-                dark: false,
                 editMode: false,
             }
         case NEW_NOTE + UPLOAD:
@@ -37,7 +34,6 @@ export default function newNote (state = initialState, action) {
         case NEW_NOTE + CONFIRM:
             return {
                 ...state,
-                dark: false,
                 editMode: false,
                 loaded: false,
             }

@@ -9,23 +9,13 @@ import {
     loadedNewNoteSelector,
     loadingNewNoteSelector
 } from '../../redux/selectors';
+import {KeyDownEscape} from '../../Hoc/keyDownEscape';
 
 const NoteAdd = ({addNoteSave, newNoteCancel, loadingNewNote, loadedNewNote, addNoteConfirm, errorNewNote}) => {
     const {register, handleSubmit, formState: {errors}} = useForm();
     const onSubmit = handleSubmit(data => {
         addNoteSave(data)
     });
-    const escape = (e) => {
-        if (e.key === 'Escape') {
-            newNoteCancel()
-        }
-    };
-    useEffect(() => {
-        document.addEventListener('keydown', escape, false);
-        return () => {
-            document.removeEventListener('keydown', escape, false);
-        };
-    }, []); //eslint-disable-line
     return (
         <div className={styles.root}>
             <h1>Добавить запись</h1>
@@ -64,8 +54,8 @@ const NoteAdd = ({addNoteSave, newNoteCancel, loadingNewNote, loadedNewNote, add
     );
 };
 
-export default connect(state => ({
+export default KeyDownEscape(connect(state => ({
     loadingNewNote: loadingNewNoteSelector(state),
     loadedNewNote: loadedNewNoteSelector(state),
     errorNewNote: errorNewNoteSelector(state),
-}), {addNoteSave, newNoteCancel, addNoteConfirm})(NoteAdd);
+}), {addNoteSave, newNoteCancel, addNoteConfirm})(NoteAdd));
