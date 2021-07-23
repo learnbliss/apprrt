@@ -11,6 +11,10 @@
   box-shadow: 0 0 5px 1px rgba(0,0,0,0.75);
 }
 
+.close {
+  cursor: pointer;
+}
+
 .head {
   display: grid;
   align-items: center;

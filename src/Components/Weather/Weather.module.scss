@@ -1,0 +1,28 @@
+.error {
+  font-size: .8rem;
+  color: red;
+}
+
+.data {
+  display: grid;
+  grid-gap: .5rem;
+}
+
+.sun {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 1rem;
+  justify-content: start;
+}
+
+.wrapLabel {
+  margin: 1rem 0;
+}
+
+.label {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 1rem;
+  justify-content: start;
+  align-items: center;
+}
