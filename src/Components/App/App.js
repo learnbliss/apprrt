@@ -6,6 +6,7 @@ import Head from '../Head/Head';
 import {Switch, Route} from 'react-router-dom';
 import Weather from '../Weather/Weather';
 import NotFound404 from '../NotFound404/NotFound404';
+import Login from '../Login/Login';
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
                 <Switch>
                     <Route exact path={'/'} component={Journal}/>
                     <Route path={'/weather'} component={Weather}/>
+                    <Route path={'/login'} component={Login}/>
                     <Route path='/' component={NotFound404}/>
                 </Switch>
             </div>

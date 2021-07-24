@@ -5,6 +5,7 @@ import delNote from './delNote';
 import {connectRouter} from "connected-react-router";
 import history from '../../history';
 import weather from './weather';
+import auth from './auth';
 
 export default combineReducers({
     router: connectRouter(history),
@@ -12,4 +13,5 @@ export default combineReducers({
     newNote,
     delNote,
     weather,
+    auth,
 });

@@ -107,3 +107,40 @@ export const getCoordinates = () => {
         }
     };
 };
+
+export const signUp = (userData) => {
+    console.log('userData in signUp action: ', userData);
+    return async (dispatch, getState) => {
+        try {
+            await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAks4VT1Wc0s4YCTCzaDuWGA9l1fdKIJOw`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: userData.email,
+                    password: userData.password,
+                    returnSecureToken: true
+                }),
+                headers: {'Content-Type': 'application/json'}
+            }).then(res => res.json())
+        } catch (err) {
+            console.error(err);
+        }
+    };
+};
+
+export const signIn = (userData) => {
+    return async (dispatch, getState) => {
+        try {
+            await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAks4VT1Wc0s4YCTCzaDuWGA9l1fdKIJOw`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: userData.email,
+                    password: userData.password,
+                    returnSecureToken: true
+                }),
+                headers: {'Content-Type': 'application/json'}
+            }).then(res => res.json())
+        } catch (err) {
+            console.error(err);
+        }
+    };
+};

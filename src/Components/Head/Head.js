@@ -7,7 +7,7 @@ const Head = () => {
         <div className={styles.root}>
             <Link to={'/'}>Журнал</Link>
             <Link to={'/weather'}>Погода</Link>
-            <Link to={'/login'}>Login</Link>
+            <Link to={'/login'}>Войти</Link>
         </div>
     );
 };
