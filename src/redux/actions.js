@@ -121,6 +121,7 @@ export const auth = ({email, password}, isLogin) => {
         url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='
     }
     return async (dispatch) => {
+        dispatch({type: AUTHENTICATION + REQUEST})
         try {
             const response = await fetch(url + apiKey, {
                 method: 'POST',

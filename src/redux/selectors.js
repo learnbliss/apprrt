@@ -49,3 +49,4 @@ export const sunsetTimeSelector = createSelector(
 
 export const isAuthSelector = state => state.auth.token
 export const userEmailSelector = state => state.auth.email
+export const requestAuthSelector = state => state.auth.request

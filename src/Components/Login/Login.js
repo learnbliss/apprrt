@@ -4,9 +4,9 @@ import {useForm} from 'react-hook-form';
 import {connect} from 'react-redux';
 import {auth, autoLogin} from '../../redux/actions';
 import {Redirect} from 'react-router-dom';
-import {isAuthSelector} from '../../redux/selectors';
+import {isAuthSelector, requestAuthSelector} from '../../redux/selectors';
 
-const Login = ({auth, isAuth, autoLogin}) => {
+const Login = ({auth, isAuth, autoLogin, request}) => {
     const {register, handleSubmit, formState} = useForm({
         mode: 'onBlur'
     });
@@ -53,8 +53,8 @@ const Login = ({auth, isAuth, autoLogin}) => {
                     <span className={styles.error}>Password minimum 6 characters</span>}
                 </label>
                 <div className={styles.buttons}>
-                    <button name={'signIn'} onClick={() => preSubmit(true)} type={'submit'}>Sign In</button>
-                    <button name={'signUp'} onClick={() => preSubmit(false)} type={'submit'}>Sign Up</button>
+                    <button name={'signIn'} onClick={() => preSubmit(true)} type={'submit'} disabled={request}>Sign In</button>
+                    <button name={'signUp'} onClick={() => preSubmit(false)} type={'submit'} disabled={request}>Sign Up</button>
                 </div>
             </form>
         </div>
@@ -62,7 +62,8 @@ const Login = ({auth, isAuth, autoLogin}) => {
 };
 
 export default connect(state => ({
-    isAuth: isAuthSelector(state)
+    isAuth: isAuthSelector(state),
+    request: requestAuthSelector(state),
 }), {
     auth,
     autoLogin
