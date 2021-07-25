@@ -46,3 +46,6 @@ export const sunsetTimeSelector = createSelector(
     dataWeatherSelector,
     (data) => normalizeTime(data?.sys.sunset, data?.timezone)
 )
+
+export const isAuthSelector = state => state.auth.token
+export const userEmailSelector = state => state.auth.email

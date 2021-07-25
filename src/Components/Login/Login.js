@@ -1,34 +1,35 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './Login.module.scss';
 import {useForm} from 'react-hook-form';
 import {connect} from 'react-redux';
-import {signIn, signUp} from '../../redux/actions';
+import {auth, autoLogin} from '../../redux/actions';
+import {Redirect} from 'react-router-dom';
+import {isAuthSelector} from '../../redux/selectors';
 
-const Login = ({signUp, signIn}) => {
+const Login = ({auth, isAuth, autoLogin}) => {
     const {register, handleSubmit, formState} = useForm({
         mode: 'onBlur'
     });
-    const [action, setAction] = useState(null);
+    const [isLogin, setIsLogin] = useState();
 
-    const preSubmit = (name) => {
+    useEffect(() => {
+        autoLogin()
+    }, []); //eslint-disable-line
+
+    if (isAuth) {
+        return <Redirect to={'/journal'}/>
+    }
+
+    const preSubmit = (bool) => {
         const error = Object.keys(formState.errors).length
         if (error > 0) return;
-        setAction(name);
+        setIsLogin(bool);
         onSubmit()
     }
 
     const onSubmit = (userData) => {
         if (!userData) return;
-        switch (action) {
-            case 'signUp':
-                signUp(userData)
-                break;
-            case 'signIn':
-                signIn(userData)
-                break;
-            default:
-                return
-        }
+        auth(userData, isLogin)
     }
 
     return (
@@ -52,15 +53,17 @@ const Login = ({signUp, signIn}) => {
                     <span className={styles.error}>Password minimum 6 characters</span>}
                 </label>
                 <div className={styles.buttons}>
-                    <button name={'signIn'} onClick={(e) => preSubmit(e.target.name)} type={'submit'}>Sign In</button>
-                    <button name={'signUp'} onClick={(e) => preSubmit(e.target.name)} type={'submit'}>Sign Up</button>
+                    <button name={'signIn'} onClick={() => preSubmit(true)} type={'submit'}>Sign In</button>
+                    <button name={'signUp'} onClick={() => preSubmit(false)} type={'submit'}>Sign Up</button>
                 </div>
             </form>
         </div>
     )
 };
 
-export default connect(null, {
-    signUp,
-    signIn
+export default connect(state => ({
+    isAuth: isAuthSelector(state)
+}), {
+    auth,
+    autoLogin
 })(Login);

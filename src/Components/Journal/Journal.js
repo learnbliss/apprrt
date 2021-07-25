@@ -13,6 +13,7 @@ import Close from '../Close/Close';
 import NoteAdd from '../NoteAdd/NoteAdd';
 import BlackBackground from '../BlackBackground/BlackBackground';
 import Confirm from '../Confirm/Confirm';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 const Journal = ({loadDaybook, loading, loaded, daybook, newNoteEditMode, errorLoad, delNoteConfirm, editMode, confirmMode, cancelNoteConfirm, deleteNote, loadingDelNote}) => {
     useEffect(() => {
@@ -52,7 +53,7 @@ const Journal = ({loadDaybook, loading, loaded, daybook, newNoteEditMode, errorL
     );
 };
 
-export default connect((state) => ({
+export default withAuthRedirect(connect((state) => ({
     daybook: daybookDateTimeSelector(state),
     loading: daybookLoadingSelector(state),
     loaded: daybookLoadedSelector(state),
@@ -60,4 +61,4 @@ export default connect((state) => ({
     editMode: editModeNewNoteSelector(state),
     confirmMode: confirmDelNoteModeSelector(state),
     loadingDelNote: loadingDelNoteSelector(state),
-}), {loadDaybook, newNoteEditMode, delNoteConfirm, cancelNoteConfirm, deleteNote})(Journal);
+}), {loadDaybook, newNoteEditMode, delNoteConfirm, cancelNoteConfirm, deleteNote})(Journal));

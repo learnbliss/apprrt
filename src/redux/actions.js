@@ -1,8 +1,9 @@
 import {
+    AUTHENTICATION,
     CANCEL,
     CONFIRM, DEL_NOTE, DELETE,
     FAILURE, GET_LOCATION, GET_WEATHER,
-    LOAD_DAYBOOK,
+    LOAD_DAYBOOK, LOGOUT,
     NEW_NOTE,
     REQUEST,
     SUCCESS,
@@ -90,7 +91,7 @@ export const getWeather = () => {
 };
 
 export const getCoordinates = () => {
-    return async (dispatch, getState) => {
+    return async (dispatch) => {
         const getCoords = () => {
             return new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject))
         }
@@ -108,39 +109,72 @@ export const getCoordinates = () => {
     };
 };
 
-export const signUp = (userData) => {
-    console.log('userData in signUp action: ', userData);
-    return async (dispatch, getState) => {
+export const auth = ({email, password}, isLogin) => {
+    const userData = {
+        email,
+        password,
+        returnSecureToken: true
+    };
+    const apiKey = 'AIzaSyAks4VT1Wc0s4YCTCzaDuWGA9l1fdKIJOw';
+    let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='
+    if (isLogin) {
+        url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='
+    }
+    return async (dispatch) => {
         try {
-            await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAks4VT1Wc0s4YCTCzaDuWGA9l1fdKIJOw`, {
+            const response = await fetch(url + apiKey, {
                 method: 'POST',
-                body: JSON.stringify({
-                    email: userData.email,
-                    password: userData.password,
-                    returnSecureToken: true
-                }),
+                body: JSON.stringify(userData),
                 headers: {'Content-Type': 'application/json'}
             }).then(res => res.json())
+            const {idToken, localId, expiresIn, email} = response;
+            const expireTime = new Date(new Date().getTime() + expiresIn * 1000)
+
+            localStorage.setItem('token', idToken);
+            localStorage.setItem('userId', localId)
+            localStorage.setItem('expireTime', expireTime)
+            localStorage.setItem('email', email)
+
+            dispatch(authSuccess(idToken, email))
+            dispatch(autoLogout(expiresIn))
+
         } catch (err) {
             console.error(err);
         }
     };
 };
 
-export const signIn = (userData) => {
-    return async (dispatch, getState) => {
-        try {
-            await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAks4VT1Wc0s4YCTCzaDuWGA9l1fdKIJOw`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    email: userData.email,
-                    password: userData.password,
-                    returnSecureToken: true
-                }),
-                headers: {'Content-Type': 'application/json'}
-            }).then(res => res.json())
-        } catch (err) {
-            console.error(err);
+export const authSuccess = (token, email) => ({type: AUTHENTICATION + SUCCESS, payload: {token, email}})
+
+export const autoLogout = (time) => {
+    return (dispatch) => {
+        setTimeout(() => {
+            dispatch(logout())
+        }, time * 1000)
+    };
+};
+
+export const logout = () => {
+    return (dispatch) => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('expireTime');
+        localStorage.removeItem('email');
+        dispatch({type: AUTHENTICATION + LOGOUT})
+    };
+};
+
+export const autoLogin = () => {
+    return (dispatch) => {
+        const token = localStorage.getItem('token');
+        const email = localStorage.getItem('email');
+        const expireTime = new Date(localStorage.getItem('expireTime'))
+        if (!token || expireTime <= new Date()) {
+            dispatch(logout())
+        } else {
+            dispatch(authSuccess())
+            dispatch(autoLogout((expireTime.getTime() - new Date().getTime()) / 1000))
         }
+        dispatch(authSuccess(token, email))
     };
 };

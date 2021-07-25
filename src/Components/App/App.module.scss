@@ -1,12 +1,9 @@
 .app {
-  height: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: grid;
-  align-content: center;
   background: linear-gradient(90deg, rgba(58, 180, 85, 0.3743872549019608) 0%, rgba(29, 223, 253, 0.18391106442577032) 50%, rgba(252, 212, 69, 0.3519782913165266) 100%);
   color: #4c2861;
   overflow: auto;
-  padding: 0.3rem;
 }
 
 .wrapp {
@@ -16,6 +13,5 @@
   align-content: start;
   margin: 0 auto;
   max-width: 1000px;
-  width: 100%;
-  min-height: 100vh;
+  width: calc(100% - 1rem);
 }

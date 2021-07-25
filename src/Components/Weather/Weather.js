@@ -9,6 +9,7 @@ import {
     sunsetTimeSelector
 } from '../../redux/selectors';
 import Loader from '../Loader/Loader';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 const Weather = ({getCoordinates, errorWeather, dataWeather, sunriseTime, sunsetTime}) => {
     useEffect(() => {
@@ -46,9 +47,9 @@ const Weather = ({getCoordinates, errorWeather, dataWeather, sunriseTime, sunset
     );
 };
 
-export default connect(state => ({
+export default withAuthRedirect(connect(state => ({
     errorWeather: errorWeatherSelector(state),
     dataWeather: dataWeatherSelector(state),
     sunriseTime: sunriseTimeSelector(state),
     sunsetTime: sunsetTimeSelector(state)
-}), {getCoordinates})(Weather);
+}), {getCoordinates})(Weather));
