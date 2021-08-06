@@ -13,6 +13,7 @@
   grid-template-columns: auto auto;
   grid-gap: 1rem;
   justify-content: start;
+  margin: .5rem 0;
 }
 
 .wrapLabel {
@@ -43,8 +44,5 @@
   }
   .hline {
     display: block;
-  }
-  .sun {
-    margin: .5rem 0;
   }
 }

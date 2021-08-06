@@ -20,6 +20,10 @@ a {
   text-decoration: unset;
 }
 
+button {
+  cursor: pointer;
+}
+
 @media all and (max-width: 380px) {
   body {
     font-size: 14px;

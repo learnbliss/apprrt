@@ -37,8 +37,11 @@
   font-weight: normal;
 }
 
-@media all and (min-width: 560px) {
+@media all and (max-width: 560px) {
   .head {
-    min-width: 300px;
+    min-width: unset;
+  }
+  .root {
+    justify-content: unset;
   }
 }

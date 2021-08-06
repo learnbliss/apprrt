@@ -1,20 +1,24 @@
 import React from 'react';
 import styles from './Head.module.scss'
-import {Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {isAuthSelector, userEmailSelector} from '../../redux/selectors';
 import {logout} from '../../redux/actions';
 
 const Head = ({isAuth, email, logout}) => {
     return (
-        <div className={styles.root}>
-            {isAuth && <Link to={'/'}>Журнал</Link>}
-            {isAuth && <Link to={'/weather'}>Погода</Link>}
+        <nav className={styles.root}>
+            {isAuth &&
+            <>
+                <NavLink to={'/Journal'} activeClassName={styles.selected}>Журнал</NavLink>
+                <NavLink to={'/weather'} activeClassName={styles.selected}>Погода</NavLink>
+            </>}
             {isAuth ? <div className={styles.auth}>
-                    <span className={styles.name}>Привет <b>'{email}'</b></span><Link onClick={logout} to={'/login'}>Выйти</Link>
+                    <span className={styles.name}>Привет <b>'{email}'</b></span><NavLink onClick={logout}
+                                                                                         to={'/login'}>Выйти</NavLink>
                 </div>
-                : <Link to={'/login'}>Необходимо войти в систему</Link>}
-        </div>
+                : <NavLink to={'/login'}>Необходимо войти в систему</NavLink>}
+        </nav>
     );
 };
 
