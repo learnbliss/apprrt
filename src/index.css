@@ -19,3 +19,9 @@ a {
   color: unset;
   text-decoration: unset;
 }
+
+@media all and (max-width: 380px) {
+  body {
+    font-size: 14px;
+  }
+}

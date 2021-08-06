@@ -26,3 +26,25 @@
   justify-content: start;
   align-items: center;
 }
+
+.hline {
+  display: none;
+}
+
+.unit {
+  margin: .5rem 0;
+  display: grid;
+  grid-gap: .3rem;
+}
+
+@media all and (max-width: 380px) {
+  .label {
+    grid-template-columns: auto;
+  }
+  .hline {
+    display: block;
+  }
+  .sun {
+    margin: .5rem 0;
+  }
+}

@@ -20,6 +20,8 @@
   display: grid;
   align-items: center;
   justify-content: start;
+  grid-template-columns: 1fr auto;
+  grid-gap: 1rem;
 }
 
 .error {
@@ -31,4 +33,11 @@
   grid-template-columns: 1fr auto;
   grid-gap: 1rem;
   align-items: start;
+}
+
+@media all and (max-width: 768px) {
+   .root {
+     grid-template-columns: 1fr;
+     grid-gap: 1rem;
+   }
 }

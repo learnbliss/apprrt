@@ -27,17 +27,18 @@ const Weather = ({getCoordinates, errorWeather, dataWeather, sunriseTime, sunset
                     <input type={'text'}/>
                 </label>
             </div>
+            <hr className={styles.hline}/>
             {errorWeather ?
                 <div>Не удалось определить местоположение (
                     <span className={styles.error}>{errorWeather.message}</span>
                     )</div> : null}
             {dataWeather && <div className={styles.data}>
-                <div><b>Ваше местоположение: </b>{dataWeather.name}</div>
-                <div><b>Температура воздуха: </b>{(dataWeather.main.temp).toFixed()}℃
+                <div className={styles.unit}><b>Ваше местоположение: </b>{dataWeather.name}</div>
+                <div className={styles.unit}><b>Температура воздуха: </b>{(dataWeather.main.temp).toFixed()}℃
                     (ощущается {(dataWeather.main.feels_like).toFixed()}℃)
                 </div>
-                <div><b>Влажность: </b>{dataWeather.main.humidity}%</div>
-                <div><b>Высота над уровнем моря: </b>{dataWeather.main.sea_level} метров</div>
+                <div className={styles.unit}><b>Влажность: </b>{dataWeather.main.humidity}%</div>
+                <div className={styles.unit}><b>Высота над уровнем моря: </b>{dataWeather.main.sea_level} метров</div>
                 <div className={styles.sun}>
                     <div><b>Восход: </b>{sunriseTime}</div>
                     <div><b>Закат: </b>{sunsetTime}</div>

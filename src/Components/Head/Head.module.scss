@@ -27,3 +27,15 @@ a:hover {
     font-size: 1rem;
   }
 }
+
+@media all and (max-width: 560px) {
+  .root {
+    grid-gap: 1rem;
+    .name {
+      display: none;
+    }
+    .auth {
+      grid-template-columns: auto;
+    }
+  }
+}
