@@ -17,4 +17,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CITYS_9D2B8 }}'
           channelId: live
-          projectId: citys-9d2b8
+          projectId: react-purificatio

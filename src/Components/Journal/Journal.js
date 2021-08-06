@@ -25,7 +25,7 @@ const Journal = ({loadDaybook, loading, loaded, daybook, newNoteEditMode, errorL
     if (errorLoad === 'Failed to fetch') return <h2 className={styles.error}>ошибка загрузки данных</h2>
 
     return (
-        <>
+        <div>
             <div className={styles.head}>
                 <h1>Журнал</h1>
                 <button onClick={newNoteEditMode}>Добавить запись</button>
@@ -49,7 +49,7 @@ const Journal = ({loadDaybook, loading, loaded, daybook, newNoteEditMode, errorL
             {editMode ? <NoteAdd/> : null}
             <BlackBackground dark={editMode || confirmMode}/>
             {confirmMode ? <Confirm negativeFn={cancelNoteConfirm} positiveFn={deleteNote} condition={loadingDelNote}/> : null}
-        </>
+        </div>
     );
 };
 
