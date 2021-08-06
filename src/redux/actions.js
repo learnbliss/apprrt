@@ -83,7 +83,6 @@ export const getWeather = () => {
                 .then((res) => res.json());
             console.log('weatherData: ', weatherData);
             dispatch({type: GET_WEATHER, payload: weatherData})
-            console.log('getState(): ', getState());
         } catch (err) {
             console.log(err)
         }
